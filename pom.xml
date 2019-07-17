@@ -17,7 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-        <docker.image.name>authserv</docker.image.name>
+	<docker.image.name>ray0728/authserv</docker.image.name>
 	<docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
     </properties>
 
