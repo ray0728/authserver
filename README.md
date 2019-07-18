@@ -2,7 +2,7 @@
 # authserver
 ## 说明
 基于Spring OAuth2的权限授权服务器，提供基于authorization code的权限验证方案。
-* 服务会将生成的token信息，根据tokenkey.jks([可替换](#tokenkey]))进行加密并生成JWT Token。
+* 服务会将生成的token信息，根据tokenkey.jks([可替换](#tokenkey))进行加密并生成JWT Token。
 * JWT Token的生命周期交由Redis服务维护。
 * 对authorization code流程中RedirectURL有**特殊处理**（仅认可来源于[Gatewayserver][1]的请求。
 * 服务本身**不维护**用户信息相关的存储，用户相关信息依赖[AccountServer][2]。
