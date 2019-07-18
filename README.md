@@ -56,5 +56,5 @@ authserver:
 
 [1]:https://github.com/ray0728/gatewayserver
 [2]:https://github.com/ray0728/accountserver
-[3]:https://hub.docker.com/r/ray0728/configserv/tags
-[4]:https://github.com/ray0728/configserver/tags
+[3]:https://hub.docker.com/r/ray0728/authserv/tags
+[4]:https://github.com/ray0728/authserver/tags
