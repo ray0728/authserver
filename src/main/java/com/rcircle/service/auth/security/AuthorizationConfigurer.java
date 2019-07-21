@@ -44,14 +44,26 @@ public class AuthorizationConfigurer extends AuthorizationServerConfigurerAdapte
     @Value("${client.config.id}")
     private String clientConfigId;
 
+    @Value("${trust.config.id}")
+    private String trustConfigId;
+
     @Value("${client.config.secret}")
-    private String ClientConfigSecret;
+    private String clientConfigSecret;
+
+    @Value("${trust.config.secret}")
+    private String trustConfigSecret;
 
     @Value("#{'${client.config.grant}'.split(';')}")
     private String[] clientConfigGrantTypes;
 
+    @Value("#{'${trust.config.grant}'.split(';')}")
+    private String[] trustConfigGrantTypes;
+
     @Value("#{'${client.config.scopes}'.split(';')}")
     private String[] clientConfigScopes;
+
+    @Value("#{'${trust.config.scopes}'.split(';')}")
+    private String[] trustConfigScopes;
 
     @Resource
     private AccountService mAccountService;
@@ -82,12 +94,17 @@ public class AuthorizationConfigurer extends AuthorizationServerConfigurerAdapte
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient(clientConfigId)
-                .secret(passwordEncoder.encode(ClientConfigSecret))
+                .secret(passwordEncoder.encode(clientConfigSecret))
                 .authorizedGrantTypes(clientConfigGrantTypes)
                 .scopes(clientConfigScopes)
                 .accessTokenValiditySeconds(upload_access_validity_second)
                 .refreshTokenValiditySeconds(upload_refresh_validity_second)
                 .autoApprove(true)
+                .and()
+                .withClient(trustConfigId)
+                .secret(passwordEncoder.encode(trustConfigSecret))
+                .authorizedGrantTypes(trustConfigGrantTypes)
+                .scopes(trustConfigScopes)
         ;
     }
 
@@ -95,7 +112,6 @@ public class AuthorizationConfigurer extends AuthorizationServerConfigurerAdapte
         oauthServer
                 .tokenKeyAccess("permitAll()")
                 .checkTokenAccess("isAuthenticated()")
-//                .checkTokenAccess("permitAll()")
                 .allowFormAuthenticationForClients();
     }
 
