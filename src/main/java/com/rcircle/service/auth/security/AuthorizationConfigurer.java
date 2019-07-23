@@ -1,5 +1,6 @@
 package com.rcircle.service.auth.security;
 
+import com.rcircle.service.auth.redis.RedisStringUtils;
 import com.rcircle.service.auth.security.endpoint.LocalRedirectResolver;
 import com.rcircle.service.auth.service.AccountService;
 import com.rcircle.service.auth.service.GatewayService;
@@ -44,26 +45,17 @@ public class AuthorizationConfigurer extends AuthorizationServerConfigurerAdapte
     @Value("${client.config.id}")
     private String clientConfigId;
 
-    @Value("${trust.config.id}")
-    private String trustConfigId;
-
     @Value("${client.config.secret}")
     private String clientConfigSecret;
-
-    @Value("${trust.config.secret}")
-    private String trustConfigSecret;
 
     @Value("#{'${client.config.grant}'.split(';')}")
     private String[] clientConfigGrantTypes;
 
-    @Value("#{'${trust.config.grant}'.split(';')}")
-    private String[] trustConfigGrantTypes;
-
     @Value("#{'${client.config.scopes}'.split(';')}")
     private String[] clientConfigScopes;
 
-    @Value("#{'${trust.config.scopes}'.split(';')}")
-    private String[] trustConfigScopes;
+    @Value("${trust.config.header}")
+    private String trustConfigHeader;
 
     @Resource
     private AccountService mAccountService;
@@ -85,6 +77,9 @@ public class AuthorizationConfigurer extends AuthorizationServerConfigurerAdapte
     @Autowired
     private TokenEnhancer jwtTokenEnhancer;
 
+    @Autowired
+    private RedisStringUtils redisString;
+
     @Bean
     public TokenStore tokenStore() {
         return new CompatRedisTokenStore(connectionFactory);
@@ -100,11 +95,6 @@ public class AuthorizationConfigurer extends AuthorizationServerConfigurerAdapte
                 .accessTokenValiditySeconds(upload_access_validity_second)
                 .refreshTokenValiditySeconds(upload_refresh_validity_second)
                 .autoApprove(true)
-                .and()
-                .withClient(trustConfigId)
-                .secret(passwordEncoder.encode(trustConfigSecret))
-                .authorizedGrantTypes(trustConfigGrantTypes)
-                .scopes(trustConfigScopes)
         ;
     }
 
@@ -125,7 +115,7 @@ public class AuthorizationConfigurer extends AuthorizationServerConfigurerAdapte
                 .tokenEnhancer(tokenEnhancerChain)
                 .authenticationManager(authenticationManager)
                 .tokenStore(tokenStore())
-                .redirectResolver(new LocalRedirectResolver().setGatewayService(gatewayService))
+                .redirectResolver(new LocalRedirectResolver().setGatewayService(redisString, trustConfigHeader))
         ;
     }
 }
