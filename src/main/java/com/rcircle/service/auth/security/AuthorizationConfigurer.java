@@ -3,7 +3,6 @@ package com.rcircle.service.auth.security;
 import com.rcircle.service.auth.redis.RedisStringUtils;
 import com.rcircle.service.auth.security.endpoint.LocalRedirectResolver;
 import com.rcircle.service.auth.service.AccountService;
-import com.rcircle.service.auth.service.GatewayService;
 import com.rcircle.service.auth.utils.CompatRedisTokenStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -59,8 +58,6 @@ public class AuthorizationConfigurer extends AuthorizationServerConfigurerAdapte
 
     @Resource
     private AccountService mAccountService;
-    @Resource
-    private GatewayService gatewayService;
 
     @Autowired
     private AuthenticationManager authenticationManager;

@@ -40,17 +40,4 @@ public class TrustedController {
         response.setStatus(401);
         return "";
     }
-
-    @GetMapping("check")
-    public String checkToken(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "token", required = false, defaultValue = "") String token) {
-        if (token.equals("")) {
-            token = request.getHeader(trustConfigHeader);
-        }
-        if (token == null || token.isEmpty()) {
-            response.setStatus(401);
-        } else if (!redisString.getValue(Toolkit.getIpAddr(request)).equals(token)) {
-            response.setStatus(402);
-        }
-        return "";
-    }
 }
