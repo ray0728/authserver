@@ -32,4 +32,6 @@ java -Djava.security.egd=file:/dev/./urandom                \
      -Deureka.client.serviceUrl.defaultZone=$EUREKASERVER_URI \
      -Dspring.redis.host=$REDIS_URI                         \
      -Dspring.profiles.active=$PROFILE                      \
+     -Xdebug -Xnoagent -Djava.compiler=NONE                 \
+     -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=$REMOTE_DEBUG_PORT \
 -jar /usr/local/server/@project.build.finalName@.jar
