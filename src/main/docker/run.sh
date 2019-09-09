@@ -8,7 +8,7 @@ echo "*******  Configuration Server has started"
 echo "********************************************************"
 echo "Waiting for the eureka server to start on port $EUREKASERVER_PORT"
 echo "********************************************************"
-while ! `nc -z discoveryserver $EUREKASERVER_PORT`; do sleep 3; done
+while ! `nc -z discovery.iamray.cn $EUREKASERVER_PORT`; do sleep 3; done
 echo "******* Eureka Server has started"
 
 echo "********************************************************"
