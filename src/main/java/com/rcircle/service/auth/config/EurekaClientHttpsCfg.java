@@ -16,10 +16,10 @@ import java.security.cert.CertificateException;
 
 @Configuration
 public class EurekaClientHttpsCfg {
-    @Value("${ssl.key-store}")
+    @Value("${server.ssl.key-store}")
     String keyStoreFileName;
 
-    @Value("${ssl.key-store-password}")
+    @Value("${server.ssl.key-store-password}")
     String keyStorePassword;
 
     @Bean
