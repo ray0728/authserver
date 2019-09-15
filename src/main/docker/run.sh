@@ -27,7 +27,8 @@ echo "******* REDIS has started"
 echo "********************************************************"
 echo "Starting the Auth Server"
 echo "********************************************************"
-java -Djava.security.egd=file:/dev/./urandom                \
+java -Xmx200m -Xms200m                                     \
+     -Djava.security.egd=file:/dev/./urandom                \
      -Dspring.cloud.config.uri=$CONFIGSERVER_URI            \
      -Deureka.client.serviceUrl.defaultZone=$EUREKASERVER_URI \
      -Dspring.redis.host=$REDIS_URI                         \
